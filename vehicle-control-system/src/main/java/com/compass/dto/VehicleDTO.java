@@ -1,5 +1,93 @@
 package com.compass.dto;
 
-public class VehicleDTO {
+import com.compass.model.Fuel;
 
+public class VehicleDTO {
+    private boolean hasEngine; // Indicates if the vehicle has an engine
+    private boolean hasSteeringWheel; // Indicates if the vehicle has a steering wheel
+    private int passengerCapacity; // Number of passengers
+    private int numberOfDoors; // Number of doors
+    private int numberOfWheels; // Number of wheels
+    private boolean isCargo; // Indicates if it is a cargo vehicle
+    private double cargoCapacity; // Cargo capacity in KG
+    private Fuel fuel; // Type of fuel
+
+    // Constructor
+    public VehicleDTO(boolean hasEngine, boolean hasSteeringWheel, int passengerCapacity, 
+                      int numberOfDoors, int numberOfWheels, boolean isCargo, 
+                      double cargoCapacity, Fuel fuel) {
+        this.hasEngine = hasEngine;
+        this.hasSteeringWheel = hasSteeringWheel;
+        this.passengerCapacity = passengerCapacity;
+        this.numberOfDoors = numberOfDoors;
+        this.numberOfWheels = numberOfWheels;
+        this.isCargo = isCargo;
+        this.cargoCapacity = cargoCapacity;
+        this.fuel = fuel;
+    }
+
+    // Getters and Setters
+    public boolean hasEngine() {
+        return hasEngine;
+    }
+
+    public void setHasEngine(boolean hasEngine) {
+        this.hasEngine = hasEngine;
+    }
+
+    public boolean hasSteeringWheel() {
+        return hasSteeringWheel;
+    }
+
+    public void setHasSteeringWheel(boolean hasSteeringWheel) {
+        this.hasSteeringWheel = hasSteeringWheel;
+    }
+
+    public int getPassengerCapacity() {
+        return passengerCapacity;
+    }
+
+    public void setPassengerCapacity(int passengerCapacity) {
+        this.passengerCapacity = passengerCapacity;
+    }
+
+    public int getNumberOfDoors() {
+        return numberOfDoors;
+    }
+
+    public void setNumberOfDoors(int numberOfDoors) {
+        this.numberOfDoors = numberOfDoors;
+    }
+
+    public int getNumberOfWheels() {
+        return numberOfWheels;
+    }
+
+    public void setNumberOfWheels(int numberOfWheels) {
+        this.numberOfWheels = numberOfWheels;
+    }
+
+    public boolean isCargo() {
+        return isCargo;
+    }
+
+    public void setIsCargo(boolean isCargo) {
+        this.isCargo = isCargo;
+    }
+
+    public double getCargoCapacity() {
+        return cargoCapacity;
+    }
+
+    public void setCargoCapacity(double cargoCapacity) {
+        this.cargoCapacity = cargoCapacity;
+    }
+
+    public Fuel getFuel() {
+        return fuel;
+    }
+
+    public void setFuel(Fuel fuel) {
+        this.fuel = fuel;
+    }
 }
