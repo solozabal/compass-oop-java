@@ -1,8 +1,10 @@
 package com.compass.model;
 
 import com.compass.exception.CargoCapacityException;
+import com.compass.exception.InvalidVehicleException;
+import com.compass.interfaces.MaintenanceStrategy;
 
-public class Vehicle {
+public class Vehicle implements MaintenanceStrategy {
     private final boolean hasEngine; // Indicates if the vehicle has an engine
     private final boolean hasSteeringWheel; // Indicates if the vehicle has a steering wheel
     private final int passengerCapacity; // Number of passengers
@@ -16,7 +18,17 @@ public class Vehicle {
     // Constructor
     public Vehicle(boolean hasEngine, boolean hasSteeringWheel, int passengerCapacity,
                    int numberOfDoors, int numberOfWheels, boolean isCargo,
-                   double cargoCapacity, Fuel fuel) {
+                   double cargoCapacity, Fuel fuel) throws InvalidVehicleException {
+        // Validate passenger capacity
+        if (passengerCapacity < 0) {
+            throw new InvalidVehicleException("Passenger capacity cannot be negative.");
+        }
+
+        // Validate cargo capacity for cargo vehicles
+        if (isCargo && cargoCapacity < 0) {
+            throw new InvalidVehicleException("Cargo capacity cannot be negative for cargo vehicles.");
+        }
+
         this.hasEngine = hasEngine;
         this.hasSteeringWheel = hasSteeringWheel;
         this.passengerCapacity = passengerCapacity;
@@ -47,6 +59,23 @@ public class Vehicle {
         }
         currentCargo -= weight; // Update the current cargo weight
         System.out.println("Unloaded " + weight + " KG of cargo. Current cargo: " + currentCargo + " KG.");
+    }
+
+    // Maintenance implementation
+    @Override
+    public void performMaintenance() {
+        System.out.println("Performing maintenance on the vehicle...");
+        // Check if the vehicle is a cargo vehicle
+        if (isCargo) {
+            System.out.println("Checking cargo capacity...");
+            if (currentCargo > cargoCapacity) {
+                System.out.println("Warning: Current cargo exceeds the vehicle's capacity!");
+            } else {
+                System.out.println("Current cargo is within the capacity.");
+            }
+        }
+        // Additional maintenance checks can be added here
+        System.out.println("Maintenance completed successfully.");
     }
 
     // Getters
