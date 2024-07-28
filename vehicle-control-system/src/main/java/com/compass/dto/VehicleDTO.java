@@ -2,7 +2,7 @@ package com.compass.dto;
 
 import com.compass.model.Fuel;
 
-public class VehicleDTO {
+public final class VehicleDTO { // Tornando a classe final
     private boolean hasEngine; // Indicates if the vehicle has an engine
     private boolean hasSteeringWheel; // Indicates if the vehicle has a steering wheel
     private int passengerCapacity; // Number of passengers
@@ -18,11 +18,11 @@ public class VehicleDTO {
                       double cargoCapacity, Fuel fuel) {
         this.hasEngine = hasEngine;
         this.hasSteeringWheel = hasSteeringWheel;
-        this.passengerCapacity = passengerCapacity;
+        setPassengerCapacity(passengerCapacity); // Use setter for validation
         this.numberOfDoors = numberOfDoors;
         this.numberOfWheels = numberOfWheels;
         this.isCargo = isCargo;
-        this.cargoCapacity = cargoCapacity;
+        setCargoCapacity(cargoCapacity); // Use setter for validation
         this.fuel = fuel;
     }
 
@@ -47,7 +47,11 @@ public class VehicleDTO {
         return passengerCapacity;
     }
 
-    public void setPassengerCapacity(int passengerCapacity) {
+    // Making the setter private to avoid overridable method call in constructor
+    private void setPassengerCapacity(int passengerCapacity) {
+        if (passengerCapacity < 0) {
+            throw new IllegalArgumentException("Passenger capacity cannot be negative.");
+        }
         this.passengerCapacity = passengerCapacity;
     }
 
@@ -79,7 +83,11 @@ public class VehicleDTO {
         return cargoCapacity;
     }
 
-    public void setCargoCapacity(double cargoCapacity) {
+    // Making the setter private to avoid overridable method call in constructor
+    private void setCargoCapacity(double cargoCapacity) {
+        if (cargoCapacity < 0) {
+            throw new IllegalArgumentException("Cargo capacity cannot be negative.");
+        }
         this.cargoCapacity = cargoCapacity;
     }
 

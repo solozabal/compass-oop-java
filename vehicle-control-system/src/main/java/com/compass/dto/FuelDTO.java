@@ -17,6 +17,23 @@ public class FuelDTO {
         this.electricity = electricity;
         this.human = human;
         this.animal = animal;
+
+        validateFuelTypes();
+    }
+
+    // Method to validate fuel types
+    private void validateFuelTypes() {
+        int fuelCount = 0;
+        if (gasoline) fuelCount++;
+        if (alcohol) fuelCount++;
+        if (diesel) fuelCount++;
+        if (electricity) fuelCount++;
+        if (human) fuelCount++;
+        if (animal) fuelCount++;
+
+        if (fuelCount > 1) {
+            throw new IllegalArgumentException("Only one type of fuel can be true at a time.");
+        }
     }
 
     // Getters and Setters
@@ -26,6 +43,7 @@ public class FuelDTO {
 
     public void setGasoline(boolean gasoline) {
         this.gasoline = gasoline;
+        validateFuelTypes(); // Validate again after setting
     }
 
     public boolean isAlcohol() {
@@ -34,6 +52,7 @@ public class FuelDTO {
 
     public void setAlcohol(boolean alcohol) {
         this.alcohol = alcohol;
+        validateFuelTypes(); // Validate again after setting
     }
 
     public boolean isDiesel() {
@@ -42,6 +61,7 @@ public class FuelDTO {
 
     public void setDiesel(boolean diesel) {
         this.diesel = diesel;
+        validateFuelTypes(); // Validate again after setting
     }
 
     public boolean isElectricity() {
@@ -50,6 +70,7 @@ public class FuelDTO {
 
     public void setElectricity(boolean electricity) {
         this.electricity = electricity;
+        validateFuelTypes(); // Validate again after setting
     }
 
     public boolean isHuman() {
@@ -58,6 +79,7 @@ public class FuelDTO {
 
     public void setHuman(boolean human) {
         this.human = human;
+        validateFuelTypes(); // Validate again after setting
     }
 
     public boolean isAnimal() {
@@ -66,5 +88,6 @@ public class FuelDTO {
 
     public void setAnimal(boolean animal) {
         this.animal = animal;
+        validateFuelTypes(); // Validate again after setting
     }
 }

@@ -27,6 +27,28 @@ public class VehicleController {
         vehicles.add(vehicle); // Add the vehicle to the list
     }
 
+    // Method to edit a vehicle
+    public void editVehicle(int index, Vehicle updatedVehicle) throws VehicleNotFoundException, InvalidVehicleException {
+        if (index >= 0 && index < vehicles.size()) {
+            // Validate the updated vehicle
+            if (updatedVehicle.getPassengerCapacity() < 0) {
+                throw new InvalidVehicleException("Passenger capacity cannot be negative.");
+            }
+            vehicles.set(index, updatedVehicle); // Update the vehicle at the specified index
+        } else {
+            throw new VehicleNotFoundException("Vehicle not found at index: " + index);
+        }
+    }
+
+    // Method to remove a vehicle
+    public void removeVehicle(int index) throws VehicleNotFoundException {
+        if (index >= 0 && index < vehicles.size()) {
+            vehicles.remove(index); // Remove the vehicle at the specified index
+        } else {
+            throw new VehicleNotFoundException("Vehicle not found at index: " + index);
+        }
+    }
+
     // Method to find a vehicle by its index
     public Vehicle getVehicle(int index) throws VehicleNotFoundException {
         if (index >= 0 && index < vehicles.size()) {
