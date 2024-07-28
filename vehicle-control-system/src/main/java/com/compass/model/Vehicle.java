@@ -4,7 +4,19 @@ import com.compass.exception.CargoCapacityException;
 import com.compass.exception.InvalidVehicleException;
 import com.compass.interfaces.MaintenanceStrategy;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+import java.util.Objects;
+
+@Entity
 public class Vehicle implements MaintenanceStrategy {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id; // id for identity
+
     private final boolean hasEngine; // Indicates if the vehicle has an engine
     private final boolean hasSteeringWheel; // Indicates if the vehicle has a steering wheel
     private final int passengerCapacity; // Number of passengers
@@ -13,7 +25,7 @@ public class Vehicle implements MaintenanceStrategy {
     private final boolean isCargo; // Indicates if it is a cargo vehicle
     private final double cargoCapacity; // Cargo capacity in KG
     private Fuel fuel; // Type of fuel
-    private double currentCargo; // Current cargo weight
+    protected double currentCargo; // Current cargo weight
 
     // Constructor
     public Vehicle(boolean hasEngine, boolean hasSteeringWheel, int passengerCapacity,
@@ -40,6 +52,30 @@ public class Vehicle implements MaintenanceStrategy {
         this.currentCargo = 0; // Initialize current cargo to 0
     }
 
+    // Implementação do método equals
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Vehicle)) return false;
+        Vehicle vehicle = (Vehicle) o;
+        return hasEngine == vehicle.hasEngine &&
+                hasSteeringWheel == vehicle.hasSteeringWheel &&
+                passengerCapacity == vehicle.passengerCapacity &&
+                numberOfDoors == vehicle.numberOfDoors &&
+                numberOfWheels == vehicle.numberOfWheels &&
+                isCargo == vehicle.isCargo &&
+                Double.compare(vehicle.cargoCapacity, cargoCapacity) == 0 &&
+                Double.compare(vehicle.currentCargo, currentCargo) == 0 &&
+                Objects.equals(fuel, vehicle.fuel);
+    }
+
+    // Implementação do método hashCode
+    @Override
+    public int hashCode() {
+        return Objects.hash(hasEngine, hasSteeringWheel, passengerCapacity, numberOfDoors, numberOfWheels,
+                            isCargo, cargoCapacity, fuel, currentCargo);
+    }
+
     // Method to load cargo
     public void loadCargo(double weight) throws CargoCapacityException {
         if (!isCargo) {
@@ -49,7 +85,6 @@ public class Vehicle implements MaintenanceStrategy {
             throw new CargoCapacityException("Cargo exceeds the vehicle's capacity.");
         }
         currentCargo += weight; // Update the current cargo weight
-        System.out.println("Loaded " + weight + " KG of cargo. Current cargo: " + currentCargo + " KG.");
     }
 
     // Method to unload cargo
@@ -58,7 +93,6 @@ public class Vehicle implements MaintenanceStrategy {
             throw new CargoCapacityException("Cannot unload more cargo than currently loaded.");
         }
         currentCargo -= weight; // Update the current cargo weight
-        System.out.println("Unloaded " + weight + " KG of cargo. Current cargo: " + currentCargo + " KG.");
     }
 
     // Maintenance implementation
@@ -117,5 +151,9 @@ public class Vehicle implements MaintenanceStrategy {
 
     public void setFuel(Fuel fuel) {
         this.fuel = fuel;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
